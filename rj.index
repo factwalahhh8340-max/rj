@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work Report</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body {
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      width: 350px;
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 30px 25px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #dbdbdb;
+      border-radius: 4px;
+      background: #fafafa;
+    }
+    textarea { resize: none; height: 90px; }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0095f6;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: #007ad6; }
+    .note {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #8e8e8e;
+    }
+  </style>
+</head>
+<body>  <div class="card">
+    <div class="logo">Work Report</div><input id="name" type="text" placeholder="Worker Name" />
+<textarea id="work" placeholder="Aaj kya kaam kiya"></textarea>
+
+<button onclick="sendReport()">Submit</button>
+
+<div class="note">Submit karte hi report owner ke Telegram pe jayegi</div>
+
+  </div>  <script>
+    // 🔐 SECURITY NOTE:
+    // GitHub par token hardcode karna unsafe hota hai.
+    // Niche BOT_TOKEN aur CHAT_ID me apni value paste karo,
+    // ya Render me ENV VAR use karo (recommended).
+
+    const BOT_TOKEN = "8152205578:AAHGsAmhOE5QDdDWif8W7wrFgCtR5sfTr7Q";
+    const CHAT_ID  = "6494505776";   // e.g. 123456789
+
+    function sendReport() {
+      const name = document.getElementById('name').value.trim();
+      const work = document.getElementById('work').value.trim();
+
+      if (!name || !work) {
+        alert('Naam aur kaam dono bharo');
+        return;
+      }
+
+      const text = `📋 Work Report\n👤 Name: ${name}\n🛠 Work: ${work}`;
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text })
+      })
+      .then(() => {
+        alert('Report send ho gaya ✅');
+        document.getElementById('name').value = '';
+        document.getElementById('work').value = '';
+      })
+      .catch(() => alert('Error aaya ❌'));
+    }
+  </script></body>
+</html>
