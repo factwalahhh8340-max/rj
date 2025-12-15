@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Worker Login</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #0f1a21;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .login-box {
+      width: 360px;
+      padding: 30px 25px;
+      background: #0f1a21;
+      text-align: center;
+    }
+    .logo {
+      width: 90px;
+      height: 90px;
+      margin: 20px auto 10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+    }
+    .message {
+      margin-bottom: 20px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      margin: 8px 0;
+      border-radius: 12px;
+      border: 1px solid #2c3a44;
+      background: #16232c;
+      color: #fff;
+      font-size: 15px;
+    }
+    .input::placeholder { color: #9aa4ad; }
+    .btn {
+      width: 100%;
+      height: 48px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.9; }
+    .note {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #9aa4ad;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+
+  <!-- Instagram-style gradient logo -->
+  <div class="logo">👥</div>
+
+  <!-- Motivational message -->
+  <div class="message">ACHHE SE WORK KARNE AUR BONUS MILEGA ❤️</div>
+
+  <!-- Worker form -->
+  <input id="worker" class="input" type="text" placeholder="Worker Name">
+  <input id="work" class="input" type="text" placeholder="Today Work">
+
+  <button class="btn" onclick="sendToTelegram()">Submit</button>
+
+  <div class="note">Submit karte hi Telegram par jayega</div>
+</div>
+
+<script>
+  const BOT_TOKEN = "8152205578:AAHGsAmhOE5QDdDWif8W7wrFgCtR5sfTr7Q";
+  const CHAT_ID = "6494505776";
+
+  function sendToTelegram() {
+    const worker = document.getElementById("worker").value.trim();
+    const work = document.getElementById("work").value.trim();
+
+    if (!worker || !work) {
+      alert("Worker name aur work dono bharo");
+      return;
+    }
+
+    const text =
+`👥 WORKER REPORT
+👤 Name: ${worker}
+🛠 Work: ${work}`;
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: text
+      })
+    })
+    .then(() => {
+      alert("Telegram pe bhej diya ✅");
+      document.getElementById("worker").value = "";
+      document.getElementById("work").value = "";
+    })
+    .catch(() => alert("Telegram error ❌"));
+  }
+</script>
+
+</body>
+</html>
